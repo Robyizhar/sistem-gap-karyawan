@@ -28,10 +28,10 @@ class KaryawanController extends Controller
     }
 
     public function index() {
-        // return view('master.karyawan.index');
-        $this->role = auth()->user()->unit_id;
-        $data = $this->service->getData($this->role)->orderBy('karyawans.np')->get();
-        return response()->json($data, 200); 
+        return view('master.karyawan.index');
+        // $this->role = auth()->user()->unit_id;
+        // $data = $this->service->getData($this->role)->orderBy('karyawans.np')->get();
+        // return response()->json($data, 200);
     }
 
     public function getData() {
