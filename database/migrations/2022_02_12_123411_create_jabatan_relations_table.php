@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateJabatanRelationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('jabatan_relations', function (Blueprint $table) {
+            $table->id();
+            $table->integer('jabatan_id');
+            $table->integer('unit_id');
+            $table->integer('pangkat_id');
+            $table->integer('level_id');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('jabatan_relations');
+    }
+}
