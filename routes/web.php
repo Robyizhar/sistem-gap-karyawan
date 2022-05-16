@@ -321,6 +321,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/level', [RekapitulasiController::class, 'level'])->name('rekapitulasi.level')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
+        Route::post('/count-level', [RekapitulasiController::class, 'countPangkatByUnit'])->name('count.level')
+            ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
+
         Route::get('/pangkat', [RekapitulasiController::class, 'pangkat'])->name('rekapitulasi.pangkat')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
