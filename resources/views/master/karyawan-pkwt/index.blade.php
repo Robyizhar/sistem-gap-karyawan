@@ -78,9 +78,9 @@
             <th>NP</th>
             <th>NAMA LENGKAP</th>
             <th>UNIT KERJA</th>
-            <th>STATUS</th>
             <th>KETERANGAN</th>
-            <th width="25%">AKSI</th>
+            <th>TGL SELESAI KONTRAK</th>
+            <th width="10%">AKSI</th>
         @endslot
     @endcomponent
 @endsection
@@ -108,8 +108,8 @@ $(document).ready( function () {
             {data: 'np', name: 'np'},
             {data: 'nama', name: 'nama'},
             {data: 'nama_unit', name: 'nama_unit'},
-            {data: 'status', name: 'status'},
             {data: 'keterangan', name: 'keterangan'},
+            {data: 'Tgl_Akhir_Kontrak', name: 'Tgl_Akhir_Kontrak'},
             {data: 'Action', name: 'Action'}
         ]
     });

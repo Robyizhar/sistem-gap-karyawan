@@ -7,7 +7,7 @@ use DB;
 
 class ServicePromosi extends Controller {
 
-    public function getData($id = null) {
+    public function getData($id = null, $unit_id = null) {
 
         $query = DB::table('promosi_karyawan')
             ->select('promosi_karyawan.*',
@@ -48,6 +48,26 @@ class ServicePromosi extends Controller {
             ;
         if($id != null)
             $query->where('promosi_karyawan.id', $id);
+
+        return $query;
+    }
+
+    public function getDataPkwt($id = null, $unit_id = null){
+        $query = DB::table('penilaian_nkis')
+            ->select('penilaian_nkis.*',
+                'karyawan_pkwt.np AS np',
+                'karyawan_pkwt.nama AS nama',
+                'kontrak_pkwts.kontrak_ke AS kontrak_ke',
+                'kontrak_pkwts.tanggal_mulai AS tanggal_mulai',
+                'kontrak_pkwts.tanggal_berakhir AS tanggal_berakhir',
+                'units.nama AS nama_unit'
+            )
+            ->join('karyawan_pkwt', 'karyawan_pkwt.id', '=', 'penilaian_nkis.karyawan_id')
+            ->join('units', 'units.id', '=', 'karyawan_pkwt.unit_id')
+            ->join('kontrak_pkwts', 'kontrak_pkwts.karyawan_pkwt_id', '=', 'karyawan_pkwt.id');
+
+            if($id != null)
+                $query->where('penilaian_nkis.id', $id);
 
         return $query;
     }

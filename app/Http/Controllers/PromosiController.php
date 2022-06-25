@@ -29,7 +29,6 @@ class PromosiController extends Controller {
     }
 
     public function index() {
-        // return $this->service->getData()->get();
         $data['unit'] = $this->unit->get();
         return view('penilaian-promosi.promosi.index', compact('data'));
     }

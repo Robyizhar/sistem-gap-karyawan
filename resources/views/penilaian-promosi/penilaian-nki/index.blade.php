@@ -103,7 +103,7 @@ $(document).ready( function () {
         columns: [
             {data: 'DT_RowIndex', name: 'id'},
             {data: 'np', name: 'np'},
-            {data: 'nama_lengkap', name: 'nama_lengkap'},
+            {data: 'nama', name: 'nama'},
             {data: 'Action', name: 'Action'}
         ]
     });

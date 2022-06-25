@@ -61,9 +61,9 @@
 @section('content')
 @component('layouts.component.form')
     @slot('isfile',true)
-    @slot('action', !isset($data) ? route('penilaian-nki.store') : route('penilaian-nki.update'))
+    @slot('action', !isset($data) ? route('penilaian-nki.store') : route('penilaian-nki.store'))
     @isset ($data)
-        @slot('method','PUT')
+        @slot('method','POST')
     @else
         @slot('method','POST')
     @endisset
@@ -92,8 +92,8 @@
         <div class="col-md-8">
             <div class="form-group mb-3">
                 <label for="nama">Nama Lengkap</label>
-                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data) ? old('nama') : old('nama', $data->nama) }}" type="text" id="nama" class="form-control">
-                <input type="hidden" value="{{ isset($data) ? $data->karyawan_id : '' }}" name="karyawan_id" id="karyawan_id">
+                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data) ? old('nama') : old('nama', $data->nama) }}" type="text" id="nama_lengkap" class="form-control">
+                <input type="hidden" value="{{ isset($data) ? $data->id : '' }}" name="karyawan_id" id="karyawan_id">
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@
 
     function setName(params) {
 
-        $('#nama').val(params.value_name)
+        $('#nama_lengkap').val(params.value_name)
         $('#id_unit_kerja').val(params.value_unit_id)
         $('#karyawan_id').val(params.value_id_karyawan)
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PromosiController;
 use App\Http\Controllers\PenilaianNKIController;
 use App\Http\Controllers\RekapitulasiController;
+use App\Http\Controllers\KontrakPkwtController;
 
 use App\Http\Controllers\Master\JabatanController;
 use App\Http\Controllers\Master\PangkatController;
@@ -221,6 +222,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [PenilaianNKIController::class, 'create'])->name('penilaian-nki.create')
             ->middleware(['role_or_permission:Developer|Add-Penilaian NKI']);
 
+        Route::get('/create/{np}', [PenilaianNKIController::class, 'createNew'])->name('penilaian-nki.create-new')
+            ->middleware(['role_or_permission:Developer|Add-Penilaian NKI']);
+
         Route::get('/edit/{id}', [PenilaianNKIController::class, 'edit'])->name('penilaian-nki.edit')
             ->middleware(['role_or_permission:Developer|Edit-Penilaian NKI']);
 
@@ -253,16 +257,16 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('kontrak')->group(function () {
-        Route::get('/', [PromosiController::class, 'index'])->name('kontrak.index')
+        Route::get('/', [KontrakPkwtController::class, 'index'])->name('kontrak.index')
             ->middleware(['role_or_permission:Developer|View-Promosi']);
 
-        Route::post('/get-data', [PromosiController::class, 'getData'])
+        Route::post('/get-data', [KontrakPkwtController::class, 'getData'])
             ->middleware(['role_or_permission:Developer|View-Promosi']);
 
-        Route::post('/store', [PromosiController::class, 'store'])->name('kontrak.store')
+        Route::post('/store', [KontrakPkwtController::class, 'store'])->name('kontrak.store')
             ->middleware(['role_or_permission:Developer|Add-Promosi']);
 
-        Route::post('/cancelValid', [PromosiController::class, 'cancelValid'])->name('kontrak.cancel-valid')
+        Route::post('/cancelValid', [KontrakPkwtController::class, 'cancelValid'])->name('kontrak.cancel-valid')
             ->middleware(['role_or_permission:Developer|Edit-Promosi']);
 
     });

@@ -31,15 +31,18 @@ class ServicePenilaian extends Controller {
         return $query;
     }
 
-    public function getDataNKI($id = null) {
+    public function getDataNKI($id = null, $unit_id = null) {
 
         $query = DB::table('penilaian_nkis')
             ->select('penilaian_nkis.*',
-                'karyawan_pkwt.nama AS nama_lengkap',
+                'karyawan_pkwt.nama AS nama',
                 'karyawan_pkwt.np AS np'
             )
             ->leftjoin('karyawan_pkwt', 'penilaian_nkis.karyawan_id', '=', 'karyawan_pkwt.id')
             ->where('penilaian_nkis.status_kontrak', false);
+
+        if($unit_id != null)
+            $query->where('karyawan_pkwt.unit_id', $unit_id);
 
         if($id != null)
             $query->where('penilaian_nkis.id', $id);

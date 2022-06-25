@@ -89,9 +89,9 @@ class PermissionsDemoSeeder extends Seeder
             $menu_id++;
         } while ($index_menus < sizeOf($menus));
 
-        Permission::create(['name' => 'View Refresh', 'menu_id' => 19 ]);
-        Permission::create(['name' => 'View SMTP', 'menu_id' => 20 ]);
-        Permission::create(['name' => 'View Setting', 'menu_id' => 23 ]);
+        Permission::create(['name' => 'View-Rekapitulasi Level', 'menu_id' => 19 ]);
+        Permission::create(['name' => 'View-Rekapitulasi Pangkat', 'menu_id' => 20 ]);
+        Permission::create(['name' => 'View-Rekapitulasi PKWT', 'menu_id' => 23 ]);
 
         // buat role
         $kaun = Role::create(['id' => 3, 'name' => 'Kapala Unit']);
@@ -99,6 +99,7 @@ class PermissionsDemoSeeder extends Seeder
         $admin = Role::create(['id' => 1, 'name' => 'Administrator']);
         $dev = Role::create(['id' => 4, 'name' => 'Developer']);
         $dev->givePermissionTo(Permission::all());
+        $kaun->givePermissionTo(['View-Penilaian', 'Add-Penilaian', 'Edit-Penilaian', 'Delete-Penilaian', 'View-Penilaian NKI', 'Add-Penilaian NKI', 'Edit-Penilaian NKI', 'Delete-Penilaian NKI', 'View-Karyawan', 'View-Karyawan PKWT']);
 
         $units = Unit::get();
 

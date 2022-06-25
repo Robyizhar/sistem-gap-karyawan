@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use File;
 use DB;
+use Carbon\Carbon;
 
 class ServiceKaryawanPkwt extends Controller {
 
@@ -998,10 +999,12 @@ class ServiceKaryawanPkwt extends Controller {
     public function getData($unit_id = null) {
 
         $query = DB::table('karyawan_pkwt')
-            ->select('karyawan_pkwt.*', 'units.nama AS nama_unit')
+            ->select('karyawan_pkwt.*', 'units.nama AS nama_unit', 'kontrak_pkwts.tanggal_berakhir', 'kontrak_pkwts.tanggal_mulai')
             ->where('karyawan_pkwt.deleted_at', null)
             ->leftjoin('units', 'karyawan_pkwt.unit_id', '=', 'units.id')
-            ->orderBy('units.nama', 'ASC');
+            ->join('kontrak_pkwts', 'karyawan_pkwt.id', '=', 'kontrak_pkwts.karyawan_pkwt_id')
+            ->orderBy('units.nama', 'ASC')
+            ->where('kontrak_pkwts.tanggal_berakhir', '>=', Carbon::today());
 
         if($unit_id != null)
             $query->where('karyawan_pkwt.unit_id', $unit_id);
@@ -1009,3 +1012,4 @@ class ServiceKaryawanPkwt extends Controller {
         return $query;
     }
 }
+// ->where('created_at', '>=', Carbon::today())

@@ -84,10 +84,27 @@
             </span>
         </a>
     @endif
+    @if (isset($detail_kontrak) && (Auth::user()->getRoleNames()[0] == 'Developer' || Auth::user()->hasAnyPermission(['View-'.$menu])))
+        <a
+            href="#"
+            data-id="{{ $detail_kontrak->id }}"
+            data-np="{{ $detail_kontrak->np }}"
+            data-nama="{{ $detail_kontrak->nama }}"
+            data-kontrak_ke="{{ $detail_kontrak->kontrak_ke}}"
+            data-tanggal_mulai="{{ date("d-M-Y", strtotime($detail_kontrak->tanggal_mulai)) }}"
+            data-tanggal_berakhir="{{ date("d-M-Y", strtotime($detail_kontrak->tanggal_berakhir)) }}"
+            data-index_penilaian="{{ $detail_kontrak->index_penilaian }}"
+            data-nama_unit="{{ $detail_kontrak->nama_unit }}"
+            data-status_kontrak="{{ $detail_kontrak->status_kontrak }}"
+            data-toggle="modal" data-target="#full-width-modal"
+            class="btn-show btn btn-sm btn-round btn-icon icon-left btn-transparent detail_kontrak" title="Detail">
+            <span class="svg-icon svg-icon-2 m-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+                    <rect y="6" width="16" height="3" rx="1.5" fill="black"></rect>
+                    <rect opacity="0.3" y="12" width="8" height="3" rx="1.5" fill="black"></rect>
+                    <rect opacity="0.3" width="12" height="3" rx="1.5" fill="black"></rect>
+                </svg>
+            </span>
+        </a>
+    @endif
 </div>
-
-{{-- // "id": null,
-// "penilaian_karyawan_id": 2,
-// "unit_id": null,
-// "jabatan_id": null,
-// "new_jabatan_id": null, --}}

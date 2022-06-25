@@ -10,6 +10,7 @@ use App\Repositories\BaseRepository;
 use App\Service\ServicePenilaian;
 use Yajra\DataTables\Facades\DataTables;
 use App\Service\ServiceKaryawanPkwt;
+use App\Models\Master\KaryawanPKWT;
 use DB;
 
 class PenilaianNKIController extends Controller {
@@ -28,7 +29,8 @@ class PenilaianNKIController extends Controller {
     }
 
     public function getData() {
-        $data = $this->service->getDataNKI()->get();
+        $this->role = auth()->user()->unit_id;
+        $data = $this->service->getDataNKI(null, $this->role)->get();
         return DataTables::of($data)
         ->addColumn('Action', function ($data) {
             return view('layouts.component.action', [
@@ -51,6 +53,15 @@ class PenilaianNKIController extends Controller {
         $karyawans = $services->getData($this->role)->get();
         $index_penilaian = DB::table('index_penilaians')->get();
         return view('penilaian-promosi.penilaian-nki.create', compact('karyawans', 'index_penilaian'));
+    }
+
+    public function createNew($id){
+        $this->role = auth()->user()->unit_id;
+        $services = new ServiceKaryawanPkwt;
+        $karyawans = $services->getData($this->role)->get();
+        $index_penilaian = DB::table('index_penilaians')->get();
+        $data = KaryawanPKWT::findOrFail($id);
+        return view('penilaian-promosi.penilaian-nki.add-new', compact('data', 'karyawans', 'index_penilaian'));
     }
 
     public function store(Request $request) {
@@ -84,8 +95,9 @@ class PenilaianNKIController extends Controller {
         $karyawans = $services->getData($this->role)->get();
         $index_penilaian = DB::table('index_penilaians')->get();
         $data = $this->service->getDataNKI($id)->first();
+        $edit = true;
         $index_penilaians = json_decode($data->index_penilaian);
-        return view('penilaian-promosi.penilaian-nki.create', compact('karyawans', 'index_penilaian', 'index_penilaians', 'data'));
+        return view('penilaian-promosi.penilaian-nki.create', compact('karyawans', 'index_penilaian', 'index_penilaians', 'data', 'edit'));
     }
 
     public function update(Request $request) {

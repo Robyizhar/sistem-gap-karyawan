@@ -37,15 +37,31 @@ class KaryawanPkwtController extends Controller
         ->addColumn('Action', function ($data) {
             return view('layouts.component.action', [
                     'model' => $data,
-                    // 'url_show' => route('karyawan-pkwt.show', $data->id),
                     'url_edit' => route('karyawan-pkwt.edit', $data->id),
                     'url_destroy' => route('karyawan-pkwt.destroy', $data->id),
                     'menu' => 'Karyawan PKWT'
                 ]
             );
         })
+        ->addColumn('Tgl_Akhir_Kontrak', function($data) {
+            $badges = '';
+
+            if (strtotime($data->tanggal_berakhir) <= strtotime('+3 month') && strtotime($data->tanggal_berakhir) > strtotime('now')) {
+                $tanggal_berakhir = date_create_from_format('Y-m-d', $data->tanggal_berakhir);
+                $tanggal_sekarang = date_create_from_format('Y-m-d', date('Y-m-d'));
+                $sisa_waktu_kerja = (array) date_diff($tanggal_berakhir, $tanggal_sekarang);
+                $badges .= $sisa_waktu_kerja['m']. ' Bulan '. $sisa_waktu_kerja['d'] . ' Hari lagi';
+            } else if (strtotime($data->tanggal_berakhir) == strtotime('now')) {
+                $badges .= 'Kontrak Berakhir Hari Ini';
+            } else if (strtotime($data->tanggal_berakhir) < strtotime('now')) {
+                $badges .= 'Kontrak Berakhir';
+            }
+
+            return view('layouts.component.badge', ['akhir_kontrak' => $badges, 'id' => $data->id] );
+
+        })
         ->addIndexColumn()
-        ->rawColumns(['Action'])
+        ->rawColumns(['Action', 'Tgl_Akhir_Kontrak'])
         ->make(true);
     }
 
@@ -70,10 +86,6 @@ class KaryawanPkwtController extends Controller
             return back();
         }
     }
-
-    // public function show($id) {
-    //     //
-    // }
 
     public function edit($id) {
         try {

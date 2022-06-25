@@ -9,3 +9,7 @@
 @isset($lama_jabatan)
     <span class="badge badge-pill badge-info">{{ $lama_jabatan }}</span>
 @endisset
+
+@isset($akhir_kontrak)
+    <a href="{{ route('penilaian-nki.create-new', $id) }}" class="badge badge-pill badge-info">{{ $akhir_kontrak }}</a>
+@endisset
