@@ -319,21 +319,26 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('rekapitulasi')->group(function () {
 
-        Route::get('/jabatan', [RekapitulasiController::class, 'jabatan'])->name('rekapitulasi.jabatan')
-            ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
+        // Route::get('/jabatan', [RekapitulasiController::class, 'jabatan'])->name('rekapitulasi.jabatan')
+        //     ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
         Route::get('/level', [RekapitulasiController::class, 'level'])->name('rekapitulasi.level')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
-        Route::post('/count-level', [RekapitulasiController::class, 'countPangkatByUnit'])->name('count.level')
+        Route::post('/count-level', [RekapitulasiController::class, 'countLevelByUnit'])->name('count.level')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
         Route::get('/pangkat', [RekapitulasiController::class, 'pangkat'])->name('rekapitulasi.pangkat')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
+        Route::post('/count-pangkat', [RekapitulasiController::class, 'countPangkatByUnit'])->name('count.pangkat')
+            ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
+
         Route::get('/pkwt', [RekapitulasiController::class, 'pkwt'])->name('rekapitulasi.pkwt')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
+        Route::post('/count-pkwt', [RekapitulasiController::class, 'countPkwtByUnit'])->name('count.pkwt')
+            ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
     });
 
 });

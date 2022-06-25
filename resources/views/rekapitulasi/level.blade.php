@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div>
-                                <canvas id="pangkat"></canvas>
+                                <canvas id="level"></canvas>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
     </footer>
     <!-- end Footer -->
     @php
-        $pangkats = json_encode($pangkat_labels);
+        $levels = json_encode($level_labels);
         $counts = json_encode($counts);
     @endphp
 </div>
@@ -72,10 +72,10 @@
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const pangkats = `{!! $pangkats !!}`;
+    const levels = `{!! $levels !!}`;
     const counts = `{!! $counts !!}`;
 
-    let label = JSON.parse(pangkats)
+    let label = JSON.parse(levels)
     let count_label = JSON.parse(counts)
 
     $(document).ready(function () {
@@ -87,7 +87,7 @@
             $('.form-process').css('display', 'block');
             let this_val = $(this).val();
             $.ajax({
-                url: '{{ route('count.pangkat') }}',
+                url: '{{ route('count.level') }}',
                 type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -97,7 +97,7 @@
                 success: function(response) {
                     if (response.status == 'true') {
                         clearChart();
-                        getCountCart(response.pangkat_labels, response.counts);
+                        getCountCart(response.level_labels, response.counts);
                     } else {
                         console.log('response');
                     }
