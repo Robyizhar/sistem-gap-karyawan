@@ -319,8 +319,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('rekapitulasi')->group(function () {
 
-        // Route::get('/jabatan', [RekapitulasiController::class, 'jabatan'])->name('rekapitulasi.jabatan')
-        //     ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
+        Route::get('/pensiun', [RekapitulasiController::class, 'pensiun'])->name('rekapitulasi.pensiun')
+            ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
+
+        Route::post('/count-pensiun', [RekapitulasiController::class, 'countPensiunByUnit'])->name('count.pensiun')
+            ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
 
         Route::get('/level', [RekapitulasiController::class, 'level'])->name('rekapitulasi.level')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);

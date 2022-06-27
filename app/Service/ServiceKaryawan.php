@@ -18,7 +18,7 @@ class ServiceKaryawan extends Controller {
 
         $time_now = Carbon::now();
         $now = $time_now->toDateTimeString();
-        $three_years_after = date('Y-m-d',strtotime('-3 years'));
+
 
         $query = DB::table('karyawans')
             ->select('karyawans.*',
@@ -54,10 +54,18 @@ class ServiceKaryawan extends Controller {
             $query->whereIn('pangkats.grade', $pangkat_id);
 
         if($pensiun == true) {
-            $query->where('karyawans.tanggal_pensiun', '>', $now);
-            // $query->where('karyawans.tmt_jabatan', '<', $three_years_after);
+            $query->where('karyawans.tanggal_pensiun', '<', $time_now);
         }
 
+        return $query;
+    }
+
+    public function getDataPensiun($month, $level_id = null, $unit_id = null) {
+        $query = $this->getData($unit_id, null, $level_id, null, true);
+        if ($month != 'all') {
+            $interval_time = date('Y-m-d',strtotime('-'.$month.' month'));
+            $query->where('karyawans.tanggal_pensiun', '>', $interval_time);
+        }
         return $query;
     }
 

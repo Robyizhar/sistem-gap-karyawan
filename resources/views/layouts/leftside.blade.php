@@ -159,12 +159,12 @@
 
                     <li class="menu-title mt-2">Rekapitulasi Data</li>
 
-                    {{-- <li>
-                        <a href="{{ route('rekapitulasi.jabatan') }}">
+                    <li>
+                        <a href="{{ route('rekapitulasi.pensiun') }}">
                             <i class="mdi mdi-calendar"></i>
-                            <span> Rekapitulasi Jabatan </span>
+                            <span> Karyawan Pensiun </span>
                         </a>
-                    </li> --}}
+                    </li>
                     <li>
                         <a href="{{ route('rekapitulasi.level') }}">
                             <i class="mdi mdi-calendar"></i>

@@ -123,7 +123,7 @@
             data: {
                 labels: label,
                 datasets: [{
-                    label: 'Total Pangkat',
+                    label: 'Total',
                     data: count_label,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

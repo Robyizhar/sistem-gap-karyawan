@@ -9,15 +9,54 @@ use App\Models\Master\Pangkat;
 use App\Models\Master\Karyawan;
 use App\Models\Master\KaryawanPKWT;
 use App\Repositories\BaseRepository;
+use App\Service\ServiceKaryawan;
 use DB;
+
 class RekapitulasiController extends Controller {
 
-    protected $unit, $pangkat, $level;
+    protected $unit, $pangkat, $level, $karyawan;
 
     public function __construct(Unit $Unit, Pangkat $Pangkat, Level $Level) {
         $this->unit = new BaseRepository($Unit);
         $this->pangkat = new BaseRepository($Pangkat);
         $this->level = new BaseRepository($Level);
+        $this->karyawan = new ServiceKaryawan;
+    }
+
+    public function pensiun() {
+
+        $units = $this->unit->query()->get();
+        $labels = Level::pluck('nama')->toArray();
+        $levels = $this->level->query()->get();
+        $counts = [];
+        foreach ($levels as $level) {
+            $count = $this->karyawan->getDataPensiun('all', $level->id)->count();
+            $counts [] = $count;
+        }
+        return view('rekapitulasi.pensiun', compact('units', 'labels', 'counts'));
+    }
+
+    public function countPensiunByUnit(Request $request) {
+        try {
+            $labels = Level::pluck('nama')->toArray();
+            $levels = $this->level->query()->get();
+            $counts = [];
+            foreach ($levels as $level) {
+                $count = $this->karyawan->getDataPensiun('all', $level->id, $request->unit_id)->count();
+                $counts [] = $count;
+            }
+
+            return response()->json([
+                'labels' => $labels,
+                'counts' => $counts,
+                'status' => 'true'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th,
+                'status' => 'false'
+            ]);
+        }
     }
 
     public function level() {

@@ -1,5 +1,5 @@
 <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('assets/images/chimney-home-icon-transparent-1.png') }}">
 
 <!-- Plugins css -->
 <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
