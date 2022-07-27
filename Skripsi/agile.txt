@@ -1,0 +1,30 @@
+Metodologi Penelitian Kualitatif, merupakan metode penelitian yang berlandaskan pada filsafat post positivisme, digunakan untuk meneliti pada kondisi obyek yang alamiah, (sebagai lawannya eksperimen) di mana peneliti adalah sebagai instrumen kunci, pengambilan sampel sumber data dilakukan secara purposive dan snowball yang artinya ...Purposive sampling adalah teknik pengambilan sampel sumber data dengan pertimbangan tertentu, misalnya orang tersebut dianggap paling tahu tentang apa yang kita harapkan. Snowball sampling adalah teknik pengambilan sampel sumber data yang pada awalnya jumlahnya sedikit, lama-lama menjadi besar
+
+Agile software development
+
+Apa itu agile?
+Agile software development adalah metode pengembangan perangkat lunak yang didasarkan pada pengerjaannya yang berulang, dimana aturan dan solusi yang sudah disepakati oleh setiap anggota tim dilakukan dengan kolaborasi secara terstruktur dan terorganisir.
+
+Pengembangan perangkat lunak membutuhkan waktu yang relatif cepat dan tidak membutuhkan sumber daya yang terlalu besar.
+Dapat merespon perubahan dengan cepat dan sesuai dengan kebutuhan dari klien.
+Klien dapat ikut berpartisipasi dalam pengembangan perangkat lunak dengan cara memberikan feedback kepada tim pengembang selama proses pembuatan perangkat lunak.
+
+
+Agile core value
+Agile software development sendiri memiliki empat nilai inti. Berikut ini adalah keempat nilainya:
+
+Interaksi antar individu lebih penting dibandingkan proses dan alat.
+Nilai yang pertama ini menyatakan pengembangan perangkat lunak tidak akan sukses jika tidak ada kolaborasi antara tim pengembang dan klien. Selain itu dibutuhkan juga komunikasi yang baik agar pengembangan berjalan dengan baik dan maksimal.
+
+Proses pengembangan software lebih penting dibandingkan dengan dokumentasi.
+Pada masa lalu, tim pengembang menghabiskan banyak waktu untuk melakukan dokumentasi secara rinci. Dokumentasi pada agile dapat berupa cerita dari user untuk tim pengembang dapat mengembangkan fitur. Selain itu, dokumentasi ini memang penting, akan tetapi perangkat lunak yang berjalan sesuai dengan yang direncanakan jauh lebih penting.
+
+Kolaborasi dengan klien lebih penting dibandingkan dengan kontrak.
+Kontrak memanglah penting, tapi mungkin produk yang dibuat oleh pengembang berbeda dan sedikit tidak sesuai dengan apa yang dituliskan dalam kontrak. Dengan adanya kolaborasi dengan klien, tim pengembang dapat menyesuaikan produk yang dikembangkan sesuai dengan yang tertulis dalam kontrak dan keinginan klien.
+
+Menanggapi perubahan lebih penting daripada mengikuti rencana.
+Klien akan terus meminta perubahan dan revisi sampai klien merasa sesuai dengan produk yang dibuat. Maka dari itu setiap tim pengembang harus siap dengan perubahan yang terjadi.
+
+
+
+
