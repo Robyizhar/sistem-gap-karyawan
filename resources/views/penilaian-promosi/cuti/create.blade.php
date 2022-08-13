@@ -74,28 +74,26 @@
         @endisset
         <div class="col-md-4">
             <div class="form-group mb-3">
-                <label for="np">Pilih NP</label>
+                <label for="id_karyawan">Pilih NP</label>
                 <div class="d-flex">
-                    <select style="cursor: pointer;" class="form-control" id="np" name="np">
+                    <select style="cursor: pointer;" class="form-control" id="id_karyawan" name="id_karyawan">
                         <option value="">Pilih NP</option>
                         @foreach ($karyawans as $karyawan)
-                            @if ($karyawan->penilaian_karyawan_id == null || $karyawan->penilaian_karyawan_status_promosi == true)
-                                <option status_pensiun="{{ $karyawan->penilaian_karyawan_status_promosi }}" data-unit_id="{{ $karyawan->unit_kerja_id }}" data-jabatan="{{ $karyawan->nama_jabatan }}" data-level="{{ $karyawan->nama_level }}" data-pangkat="{{ $karyawan->nama_pangkat }}" data-name="{{ $karyawan->nama_lengkap }}" value="{{ $karyawan->id }}">{{ $karyawan->np }}</option>
-                            @elseif(isset($data['detail']) && $data['detail']->np)
-                                <option status_pensiun="{{ $karyawan->penilaian_karyawan_status_promosi }}" selected data-unit_id="{{ $karyawan->unit_kerja_id }}" data-jabatan="{{ $karyawan->nama_jabatan }}" data-level="{{ $karyawan->nama_level }}" data-pangkat="{{ $karyawan->nama_pangkat }}" data-name="{{ $karyawan->nama_lengkap }}" value="{{ $karyawan->id }}">{{ $karyawan->np }}</option>
+                            @if (!isset($data['detail']))
+                                <option status_pensiun="{{ $karyawan->penilaian_karyawan_status_promosi }}" data-jabatan="{{ $karyawan->nama_jabatan }}" data-level="{{ $karyawan->nama_level }}" data-pangkat="{{ $karyawan->nama_pangkat }}" data-name="{{ $karyawan->nama_lengkap }}" value="{{ $karyawan->id }}">{{ $karyawan->np }}</option>
+                            @elseif(isset($data['detail']))
+                                <option status_pensiun="{{ $karyawan->penilaian_karyawan_status_promosi }}" selected data-jabatan="{{ $karyawan->nama_jabatan }}" data-level="{{ $karyawan->nama_level }}" data-pangkat="{{ $karyawan->nama_pangkat }}" data-name="{{ $karyawan->nama_lengkap }}" value="{{ $karyawan->id }}">{{ $karyawan->np }}</option>
                             @endif
                         @endforeach
                     </select>
                 </div>
-                @if($errors->has('np')) <div class="text-danger"> {{ $errors->first('np')}} </div>@endif
-                <input type="hidden" value="{{ isset($data['detail']) ? $data['detail']->id_unit_kerja : '' }}" name="id_unit_kerja" id="id_unit_kerja">
+                @if($errors->has('id_karyawan')) <div class="text-danger"> {{ $errors->first('id_karyawan')}} </div>@endif
             </div>
         </div>
         <div class="col-md-8">
             <div class="form-group mb-3">
                 <label for="nama_lengkap">Nama Lengkap</label>
                 <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_lengkap') : old('nama_lengkap', $data['detail']->nama_lengkap) }}" type="text" id="nama_lengkap" class="form-control">
-                <input type="hidden" value="{{ isset($data['detail']) ? $data['detail']->id_karyawan : '' }}" name="id_karyawan" id="id_karyawan">
             </div>
         </div>
     </div>
@@ -120,16 +118,50 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-3">
-                <label for="tanggal_lahir">Tanggal Lahir</label>
-                <input class="form-control" id="tanggal_lahir" name="tanggal_lahir" type="date">
-                @if($errors->has('tanggal_lahir')) <div class="text-danger"> {{ $errors->first('tanggal_lahir')}} </div>@endif
+                <label for="start_date">Tanggal Mulai</label>
+                <input class="form-control" id="start_date" name="start_date" type="date">
+                @if($errors->has('start_date')) <div class="text-danger"> {{ $errors->first('start_date')}} </div>@endif
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-3">
-                <label for="tanggal_masuk">Tanggal Masuk</label>
-                <input class="form-control" id="tanggal_masuk" name="tanggal_masuk" type="date">
-                @if($errors->has('tanggal_masuk')) <div class="text-danger"> {{ $errors->first('tanggal_masuk')}} </div>@endif
+                <label for="end_date">Tanggal Berakhir</label>
+                <input class="form-control" id="end_date" name="end_date" type="date">
+                @if($errors->has('end_date')) <div class="text-danger"> {{ $errors->first('end_date')}} </div>@endif
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label for="file">
+                    Form Cuti
+                    @if (isset($data['detail']) && $data['detail']->file != "" )
+                        <a href="{{ url('storage/'.$data['detail']->file) }}" target="_blank" rel="noopener noreferrer">Lihat File</a>
+                        <input value="{{ $data['detail']->file }}" type="hidden" name="old_file" id="old_file" class="form-control">
+                    @endif
+                </label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input accept=".pdf, .doc, .docx" type="file" name="file" class="custom-file-input" id="file">
+                        <label class="custom-file-label file" for="file">Format (.pdf, .doc, .docx)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group mb-3">
+                <label for="jenis_cuti">Jenis Cuti</label>
+                <div class="d-flex">
+                    <select style="cursor: pointer;" class="form-control" id="jenis_cuti" name="jenis_cuti">
+                        <option value="">Pilih Jenis Cuti</option>
+                        <option value="Cuti Sakit">Cuti Sakit</option>
+                        <option value="Cuti Besar">Cuti Besar</option>
+                        <option value="Cuti Hamil dan Melahirkan">Cuti Hamil dan Melahirkan</option>
+                        <option value="Cuti Penting">Cuti Penting</option>
+                    </select>
+                </div>
+                @if($errors->has('jenis_cuti')) <div class="text-danger"> {{ $errors->first('jenis_cuti')}} </div>@endif
             </div>
         </div>
 
@@ -140,18 +172,22 @@
 @push('script')
 <script>
 
+    $("#file").change(function() {
+        filename = this.files[0].name;
+        $('.file').html(filename)
+    })
+
     function setName(params) {
 
         $('#nama_lengkap').val(params.value_name)
         $('#nama_jabatan').val(params.value_jabatan)
         $('#nama_pangkat').val(params.value_pangkat)
         $('#nama_level').val(params.value_level)
-        $('#id_unit_kerja').val(params.value_unit_id)
         $('#id_karyawan').val(params.value_id_karyawan)
 
     }
 
-    $('#np').on('change', function (e) {
+    $('#id_karyawan').on('change', function (e) {
 
         let params = {
 

@@ -34,7 +34,7 @@ class CutiController extends Controller
                     'model' => $data,
                     'url_edit' => route('cuti.edit', $data->id),
                     'url_destroy' => route('cuti.destroy', $data->id),
-                    'menu' => 'Penilaian'
+                    'menu' => 'Cuti'
                 ]
             );
         })
@@ -47,12 +47,21 @@ class CutiController extends Controller
         $this->role = auth()->user()->unit_id;
         $services = new ServiceKaryawan;
         $karyawans = $services->getData($this->role, null, null, [], false)->orderBy('karyawans.np', 'ASC')->get();
-        // return $karyawans;
         return view('penilaian-promosi.cuti.create', compact('karyawans'));
     }
 
     public function store(Request $request) {
-        //
+        // return response()->json($data, 200);
+        try {
+            $data = $request->except(['_token', '_method', 'id']);
+            $data['jumlah_cuti'] = '1';
+            $this->model->store($data, true, ['file'], 'form_cuti');
+            Alert::toast('Data Citi  Berhasil Disimpan', 'success');
+            return redirect()->route('cuti.index');
+        } catch (\Throwable $th) {
+            Alert::toast($th->getMessage(), 'error');
+            return back();
+        }
     }
 
     public function show($id) {
