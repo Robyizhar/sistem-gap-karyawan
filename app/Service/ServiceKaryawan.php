@@ -55,6 +55,8 @@ class ServiceKaryawan extends Controller {
 
         if($pensiun == true) {
             $query->where('karyawans.tanggal_pensiun', '<', $time_now);
+        } else {
+            $query->where('karyawans.tanggal_pensiun', '>', $time_now);
         }
 
         return $query;

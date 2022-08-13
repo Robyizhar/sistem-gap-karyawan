@@ -24,12 +24,6 @@ class PenilaianController extends Controller {
     }
 
     public function index() {
-        // $time_now = Carbon::now();
-        // $now = $time_now->toDateString();
-        // $one = date('Y-m-d',strtotime('-3 years'));
-        // echo $now; //date('Y-m-d')
-        // echo "<br>";
-        // echo $one;
         return view('penilaian-promosi.penilaian.index');
     }
 
@@ -54,7 +48,7 @@ class PenilaianController extends Controller {
     public function create() {
         $this->role = auth()->user()->unit_id;
         $services = new ServiceKaryawan;
-        $karyawans = $services->getData($this->role, null, null, [], true)->orderBy('karyawans.np', 'ASC')->get();
+        $karyawans = $services->getData($this->role, null, null, [])->orderBy('karyawans.np', 'ASC')->get();
         $param = [];
         $param['unit_kerja_id'] = $this->role;
         $params = (object) $param;

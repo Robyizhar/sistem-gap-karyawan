@@ -153,6 +153,15 @@
                     </li>
                     @endif
 
+                    @if( Auth::user()->getRoleNames()[0] == 'Developer' || Auth::user()->hasAnyPermission(['View-Cuti']))
+                    <li>
+                        <a href="{{ route('cuti.index') }}">
+                            <i class="mdi mdi-calendar"></i>
+                            <span> Cuti (Organik) </span>
+                        </a>
+                    </li>
+                    @endif
+
                 @endif
 
                 @if( Auth::user()->getRoleNames()[0] == 'Developer' || Auth::user()->hasAnyPermission(['View-Rekapitulasi']))

@@ -19,6 +19,8 @@ class CreateCutiTable extends Migration
             $table->string('file');
             $table->string('jenis_cuti');
             $table->string('jumlah_cuti');
+            $table->date('start_date');
+            $table->date('end_date');
 
             $table->foreign('id_karyawan')->references('id')->on('karyawans')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

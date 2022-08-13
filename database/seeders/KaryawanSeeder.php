@@ -43,7 +43,6 @@ class KaryawanSeeder extends Seeder
                         'level_id' =>  $karyawan[9],
                         'pangkat_id' =>  $karyawan[10],
                         'tmt_jabatan' =>  $now,
-                        // 'masa_jabatan' =>  'Belum Update',
                         'jabatan_id' =>  $jabatan->id,
                         'unit' => $karyawan[8],
                     ];
@@ -67,7 +66,6 @@ class KaryawanSeeder extends Seeder
                         'level_id' =>  (int)$data_karyawan['level_id'],
                         'pangkat_id' =>  (int)$data_karyawan['pangkat_id'],
                         'tmt_jabatan' =>  date("Y-m-d", strtotime($data_karyawan['tanggal_masuk']. ' + 3 years')),
-                        // 'masa_jabatan' =>  'Belum Update',
                         'jabatan_id' =>  (int)$data_karyawan['jabatan_id'],
                         'unit_kerja_id' => $unit->id
                     ]);
@@ -77,4 +75,3 @@ class KaryawanSeeder extends Seeder
 
     }
 }
-// $newDate = date('Y-m-d', strtotime($date. ' + 5 years'));

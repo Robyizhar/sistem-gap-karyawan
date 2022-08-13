@@ -11,6 +11,7 @@ use App\Http\Controllers\PromosiController;
 use App\Http\Controllers\PenilaianNKIController;
 use App\Http\Controllers\RekapitulasiController;
 use App\Http\Controllers\KontrakPkwtController;
+use App\Http\Controllers\CutiController;
 
 use App\Http\Controllers\Master\JabatanController;
 use App\Http\Controllers\Master\PangkatController;
@@ -342,6 +343,30 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/count-pkwt', [RekapitulasiController::class, 'countPkwtByUnit'])->name('count.pkwt')
             ->middleware(['role_or_permission:Developer|View-Rekapitulasi']);
+    });
+
+    Route::prefix('cuti')->group(function () {
+
+        Route::get('/', [CutiController::class, 'index'])->name('cuti.index')
+            ->middleware(['role_or_permission:Developer|View-Cuti']);
+
+        Route::post('/get-data', [CutiController::class, 'getData'])
+            ->middleware(['role_or_permission:Developer|View-Cuti']);
+
+        Route::get('/create', [CutiController::class, 'create'])->name('cuti.create')
+            ->middleware(['role_or_permission:Developer|Add-Cuti']);
+
+        Route::get('/edit/{id}', [CutiController::class, 'edit'])->name('cuti.edit')
+            ->middleware(['role_or_permission:Developer|Edit-Cuti']);
+
+        Route::post('/store', [CutiController::class, 'store'])->name('cuti.store')
+            ->middleware(['role_or_permission:Developer|Add-Cuti']);
+
+        Route::put('/update', [CutiController::class, 'update'])->name('cuti.update')
+            ->middleware(['role_or_permission:Developer|Edit-Cuti']);
+
+        Route::get('/destroy/{id}', [CutiController::class, 'destroy'])->name('cuti.destroy')
+            ->middleware(['role_or_permission:Developer|Delete-Cuti']);
     });
 
 });

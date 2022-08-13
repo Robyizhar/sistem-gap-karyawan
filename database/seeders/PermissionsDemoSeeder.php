@@ -45,6 +45,7 @@ class PermissionsDemoSeeder extends Seeder
             'Pensiun',
             'Penilaian NKI',
             'Kontrak',
+            'Cuti',
 
             'Refresh',
             'SMTP',
@@ -73,7 +74,8 @@ class PermissionsDemoSeeder extends Seeder
             'User',
             'Pensiun',
             'Penilaian NKI',
-            'Kontrak'
+            'Kontrak',
+            'Cuti'
         ];
         $actions = ['View', 'Add', 'Edit', 'Delete'];
 
