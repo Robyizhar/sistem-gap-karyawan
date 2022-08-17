@@ -51,7 +51,7 @@ class CutiController extends Controller
     }
 
     public function store(Request $request) {
-        // return response()->json($data, 200);
+
         try {
             $data = $request->except(['_token', '_method', 'id']);
             $data['jumlah_cuti'] = '1';
@@ -64,12 +64,13 @@ class CutiController extends Controller
         }
     }
 
-    public function show($id) {
-        //
-    }
-
     public function edit($id) {
-        //
+        $this->role = auth()->user()->unit_id;
+        $data['detail'] = Cuti::with('karyawans.jabatan', 'karyawans.level', 'karyawans.pangkat')->findOrFail($id);
+        // return $data['detail'];
+        $services = new ServiceKaryawan;
+        $karyawans = $services->getData($this->role, null, null, [], false)->orderBy('karyawans.np', 'ASC')->get();
+        return view('penilaian-promosi.cuti.create', compact('karyawans', 'data'));
     }
 
     public function update(Request $request, $id) {

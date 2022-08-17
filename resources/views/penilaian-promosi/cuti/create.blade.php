@@ -93,7 +93,7 @@
         <div class="col-md-8">
             <div class="form-group mb-3">
                 <label for="nama_lengkap">Nama Lengkap</label>
-                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_lengkap') : old('nama_lengkap', $data['detail']->nama_lengkap) }}" type="text" id="nama_lengkap" class="form-control">
+                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_lengkap') : old('nama_lengkap', $data['detail']->karyawans->nama_lengkap) }}" type="text" id="nama_lengkap" class="form-control">
             </div>
         </div>
     </div>
@@ -101,32 +101,32 @@
         <div class="col-md-6">
             <div class="form-group mb-3">
                 <label for="nama_jabatan">Jabatan</label>
-                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_jabatan') : old('nama_jabatan', $data['detail']->nama_jabatan) }}" type="text" id="nama_jabatan" class="form-control">
+                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_jabatan') : old('nama_jabatan', $data['detail']->karyawans->jabatan->nama) }}" type="text" id="nama_jabatan" class="form-control">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-3">
                 <label for="nama_level">Level</label>
-                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_level') : old('nama_level', $data['detail']->nama_level) }}" type="text"  id="nama_level" class="form-control">
+                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_level') : old('nama_level', $data['detail']->karyawans->level->nama) }}" type="text"  id="nama_level" class="form-control">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-3">
                 <label for="nama_pangkat">Pangkat</label>
-                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_pangkat') : old('nama_pangkat', $data['detail']->nama_pangkat) }}" type="text" id="nama_pangkat" class="form-control">
+                <input style="background-color: #e9e7e7; cursor: not-allowed" readonly value="{{ !isset($data['detail']) ? old('nama_pangkat') : old('nama_pangkat', $data['detail']->karyawans->pangkat->nama) }}" type="text" id="nama_pangkat" class="form-control">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-3">
                 <label for="start_date">Tanggal Mulai</label>
-                <input class="form-control" id="start_date" name="start_date" type="date">
+                <input class="form-control" value="{{ isset($data['detail']) ? $data['detail']->start_date : '' }}" id="start_date" name="start_date" type="date">
                 @if($errors->has('start_date')) <div class="text-danger"> {{ $errors->first('start_date')}} </div>@endif
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-3">
                 <label for="end_date">Tanggal Berakhir</label>
-                <input class="form-control" id="end_date" name="end_date" type="date">
+                <input class="form-control" value="{{ isset($data['detail']) ? $data['detail']->end_date : '' }}" id="end_date" name="end_date" type="date">
                 @if($errors->has('end_date')) <div class="text-danger"> {{ $errors->first('end_date')}} </div>@endif
             </div>
         </div>

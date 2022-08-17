@@ -31,4 +31,20 @@ class Karyawan extends Model
         'tmt_jabatan',
         'masa_jabatan'
     ];
+
+    public function unit() {
+        return $this->hasOne(Unit::class, 'id', 'unit_kerja_id');
+    }
+
+    public function jabatan() {
+        return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+    }
+
+    public function level() {
+        return $this->hasOne(Level::class, 'id', 'level_id');
+    }
+
+    public function pangkat() {
+        return $this->hasOne(Pangkat::class, 'id', 'pangkat_id');
+    }
 }
