@@ -155,10 +155,13 @@
                 <div class="d-flex">
                     <select style="cursor: pointer;" class="form-control" id="jenis_cuti" name="jenis_cuti">
                         <option value="">Pilih Jenis Cuti</option>
-                        <option value="Cuti Sakit">Cuti Sakit</option>
-                        <option value="Cuti Besar">Cuti Besar</option>
-                        <option value="Cuti Hamil dan Melahirkan">Cuti Hamil dan Melahirkan</option>
-                        <option value="Cuti Penting">Cuti Penting</option>
+                        @foreach ($cuties as $cuti)
+                            @if (isset($data['detail']) && $data['detail']->jenis_cuti == $cuti)
+                                <option selected value="{{ $cuti }}">{{ $cuti }}</option>
+                            @else
+                                <option value="{{ $cuti }}">{{ $cuti }}</option>
+                            @endif
+                        @endforeach
                     </select>
                 </div>
                 @if($errors->has('jenis_cuti')) <div class="text-danger"> {{ $errors->first('jenis_cuti')}} </div>@endif
