@@ -11,15 +11,26 @@
                     <div class="form-group mb-3">
                         <label for="example-select">Pilih Unit</label>
                         <select class="form-control" id="example-select">
+                                <option value="">Pilih Unit</option>
                             @foreach ($units as $unit)
                                 <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-2">
                     <div class="form-group mt-3">
                         <button type="button" id="refresh" class="btn btn-primary btn-submit waves-effect waves-light">Refresh</button>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group mt-3">
+                        <button type="button" data-interval="3" class="interval-time btn btn-primary btn-submit waves-effect waves-light">3 Bulan</button>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group mt-3">
+                        <button type="button" data-interval="12" class="interval-time btn btn-primary btn-submit waves-effect waves-light">1 Tahun</button>
                     </div>
                 </div>
             </div>
@@ -77,15 +88,50 @@
             getCountCart(label, count_label);
         });
         $(document).on('change', '#example-select', function() {
-            $('.form-process').css('display', 'block');
             let this_val = $(this).val();
+            if (this_val == ''){
+                clearChart();
+                getCountCart(label, count_label);
+            } else {
+                $('.form-process').css('display', 'block');
+                $.ajax({
+                    url: '{{ route('count.pensiun') }}',
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "_method": 'POST',
+                        "unit_id": this_val
+                    },
+                    success: function(response) {
+                        if (response.status == 'true') {
+                            clearChart();
+                            getCountCart(response.labels, response.counts);
+                        } else {
+                            console.log('response');
+                        }
+                        $('.form-process').css('display', 'none');
+                    }, error: function (request, status, error) {
+                        console.log(error);
+                        $('.form-process').css('display', 'none');
+                    }
+                });
+            }
+
+        });
+
+        $(document).on('click', '.interval-time', function () {
+            $('.form-process').css('display', 'block');
+            let this_val = $('#example-select').val();
+            let interval_time = $(this).data('interval');
+            // console.log(interval_time);
             $.ajax({
                 url: '{{ route('count.pensiun') }}',
                 type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "_method": 'POST',
-                    "unit_id": this_val
+                    "unit_id": this_val,
+                    "interval_time": interval_time
                 },
                 success: function(response) {
                     if (response.status == 'true') {
@@ -100,7 +146,8 @@
                     $('.form-process').css('display', 'none');
                 }
             });
-        });
+        })
+
     });
 
     function clearChart() {

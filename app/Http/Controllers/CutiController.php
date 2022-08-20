@@ -106,12 +106,11 @@ class CutiController extends Controller
 
     public function destroy($id) {
         try {
-            $data = $this->model->hardDelete($id);
+            $data = $this->model->softDelete($id);
             Alert::toast('Data Berhasil Dihapus', 'success');
             return response()->json($data, 200);
         } catch (\Throwable $th) {
-            Alert::toast($th->getMessage(), 'error');
-            return redirect()->route('cuti.index');
+            return response()->json($th->getMessage(), 200);
         }
     }
 }

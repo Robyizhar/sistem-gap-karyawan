@@ -42,7 +42,11 @@ class RekapitulasiController extends Controller {
             $levels = $this->level->query()->get();
             $counts = [];
             foreach ($levels as $level) {
-                $count = $this->karyawan->getDataPensiun('all', $level->id, $request->unit_id)->count();
+                if (isset($request->interval_time)) {
+                    $count = $this->karyawan->getDataPensiun($request->interval_time, $level->id, $request->unit_id)->count();
+                } else {
+                    $count = $this->karyawan->getDataPensiun('all', $level->id, $request->unit_id)->count();
+                }
                 $counts [] = $count;
             }
 
