@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Master\Karyawan;
 use App\Models\Master\Jabatan;
 use App\Models\Master\Unit;
+use App\Models\Master\Level;
+use App\Models\Master\Pangkat;
 use App\Repositories\BaseRepository;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Master\KaryawanRequest;
@@ -28,12 +30,37 @@ class KaryawanController extends Controller
     }
 
     public function index() {
-        return view('master.karyawan.index');
+        $data = [
+            'unit' => Unit::get(),
+            // 'jabatan' => Jabatan::get(),
+            'level' => Level::get(),
+            'pangkat' => Pangkat::get(),
+        ];
+        // return $data;
+        return view('master.karyawan.index',compact('data'));
     }
 
-    public function getData() {
-        $this->role = auth()->user()->unit_id;
-        $data = $this->service->getData($this->role)->get();
+    public function getData(Request $request) {
+
+        $unit_id = $this->role = auth()->user()->unit_id;
+        $level_id = null;
+        $pangkat_id = [];
+        $pensiun = false;
+
+        if (isset($request->unit) && $request->unit != '') {
+            $unit_id = $request->unit;
+        }
+        if (isset($request->level) && $request->level != '') {
+            $level_id = $request->level;
+        }
+        if (isset($request->pangkat) && $request->pangkat != '') {
+            $pangkat_id = [$request->pangkat];
+        }
+        if (isset($request->status_pensiun) && $request->status_pensiun != 'aktif') {
+            $pensiun = true;
+        }
+
+        $data = $this->service->getData($unit_id, null, $level_id, $pangkat_id, $pensiun)->get();
         return DataTables::of($data)
         ->addColumn('Status_Pensiun', function($data) {
             $badges = '';

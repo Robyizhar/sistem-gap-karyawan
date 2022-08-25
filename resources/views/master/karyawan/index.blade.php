@@ -74,11 +74,57 @@
     @component('layouts.component.datatable')
         @slot('action', route('karyawan.create'))
         @slot('content')
+            @if ( Auth::user()->getRoleNames()[0] == 'Developer' || Auth::user()->hasAnyPermission(['View-Karyawan']))
+            <div class="row">
+                <div class="form-group col-3">
+                    <label for="unit">Unit</label>
+                    <div class="d-flex">
+                        <select style="cursor: pointer;" class="form-control filter-employee" id="unit" name="unit">
+                            <option value="">Pilih Unit</option>
+                            @foreach ($data['unit'] as $unit)
+                                <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <label for="level">Level</label>
+                    <div class="d-flex">
+                        <select style="cursor: pointer;" class="form-control filter-employee" id="level" name="level">
+                            <option value="">Pilih Level</option>
+                            @foreach ($data['level'] as $level)
+                                <option value="{{ $level->id }}">{{ $level->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <label for="pangkat">Pangkat</label>
+                    <div class="d-flex">
+                        <select style="cursor: pointer;" class="form-control filter-employee" id="pangkat" name="pangkat">
+                            <option value="">Pilih Pangkat</option>
+                            @foreach ($data['pangkat'] as $pangkat)
+                                <option value="{{ $pangkat->id }}">{{ $pangkat->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <label for="status_pensiun">Status</label>
+                    <div class="d-flex">
+                        <select style="cursor: pointer;" class="form-control filter-employee" id="status_pensiun" name="status_pensiun">
+                            <option value="aktif">Aktif</option>
+                            <option value="pensiun">Pensiun</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            @endif
             <th width="12px;">NO</th>
             <th>NP</th>
             <th>NAMA LENGKAP</th>
             <th>UNIT KERJA</th>
-            {{-- <th>JABATAN</th> 
+            {{-- <th>JABATAN</th>
             <th>LEVEL</th>
             <th>GRADE</th> --}}
             <th>LAMA MENJABAT</th>
@@ -91,8 +137,51 @@
 @push('script')
 <script>
 $(document).ready( function () {
+    $('#unit').change(function (e) {
+        e.preventDefault();
+        let this_unit = $(this).val();
+        let this_level = $('#level').val();
+        let this_pangkat =$('#pangkat').val();
+        let status_pensiun =$('#status_pensiun').val();
+        getData(this_unit, this_level, this_pangkat, status_pensiun);
+    });
+    $('#level').change(function (e) {
+        e.preventDefault();
+        let this_level = $(this).val();
+        let this_unit = $('#unit').val();
+        let this_pangkat =$('#pangkat').val();
+        let status_pensiun =$('#status_pensiun').val();
+        getData(this_unit, this_level, this_pangkat, status_pensiun);
+    });
+    $('#pangkat').change(function (e) {
+        e.preventDefault();
+        let this_pangkat = $(this).val();
+        let this_level = $('#level').val();
+        let this_unit = $('#unit').val();
+        let status_pensiun =$('#status_pensiun').val();
+        getData(this_unit, this_level, this_pangkat, status_pensiun);
+    });
+    $('#status_pensiun').change(function (e) {
+        e.preventDefault();
+        let status_pensiun = $(this).val();
+        let this_level = $('#level').val();
+        let this_unit =$('#unit').val();
+        let this_pangkat =$('#pangkat').val();
+        getData(this_unit, this_level, this_pangkat, status_pensiun);
+    });
+});
+function getData(unit, level, pangkat, status_pensiun) {
+
     $('.form-process').css('display', 'block');
+
+    if ( $.fn.DataTable.isDataTable( '#state-saving-datatable' ) ) {
+        $( '#state-saving-datatable' ).DataTable().destroy();
+    }
+
+    console.log(status_pensiun);
+
     let datatable = $('#state-saving-datatable').DataTable({
+        destroy: true,
         responsive: true,
         processing: true,
         serverSide: true,
@@ -105,7 +194,13 @@ $(document).ready( function () {
             "dataSrc": function ( json ) {
                 $('.form-process').css('display', 'none');
                 return json.data;
-            }
+            },
+            data: {
+                    "unit": unit,
+                    "level": level,
+                    "pangkat": pangkat,
+                    "status_pensiun": status_pensiun
+            },
         },
         columns: [
             {data: 'DT_RowIndex', name: 'id'},
@@ -121,7 +216,7 @@ $(document).ready( function () {
             {data: 'Action', name: 'Action'}
         ]
     });
-});
-
+}
+// getData()
 </script>
 @endpush
